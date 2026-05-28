@@ -1,0 +1,32 @@
+aid: openuv
+name: OpenUV
+description: "Real-time UV Index Forecast"
+url: https://www.openuv.io
+specificationVersion: '0.20'
+created: '2026-05-28'
+modified: '2026-05-28'
+x-source: public-apis/public-apis
+x-category: "Weather"
+x-tier: 3
+x-tier-reason: bulk-registered-from-public-apis
+tags:
+  - Weather
+  - Public APIs
+apis:
+  - name: OpenUV
+    description: "Real-time UV Index Forecast"
+    humanURL: https://www.openuv.io
+    baseURL: https://www.openuv.io
+    tags:
+      - Weather
+    properties:
+      - type: Documentation
+        url: https://www.openuv.io
+common:
+  - type: Website
+    url: https://www.openuv.io
+  - type: PublicAPIsListing
+    url: https://github.com/public-apis/public-apis
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
