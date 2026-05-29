@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/openuv/main/json-schema/openuv-protection-window-schema.json",
+  "title": "OpenUV Protection Window",
+  "description": "Start and end times of the daily UV protection window for a coordinate.",
+  "type": "object",
+  "required": ["result"],
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "from_time": { "type": ["string", "null"], "format": "date-time" },
+        "from_uv": { "type": ["number", "null"] },
+        "to_time": { "type": ["string", "null"], "format": "date-time" },
+        "to_uv": { "type": ["number", "null"] }
+      }
+    }
+  }
+}

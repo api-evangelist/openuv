@@ -1,0 +1,99 @@
+name: OpenUV Vocabulary
+description: Controlled vocabulary for the OpenUV API surface — UV index, ozone, sun position, protection windows and Fitzpatrick skin types.
+url: https://www.openuv.io
+created: '2026-05-29'
+modified: '2026-05-29'
+
+domain:
+  - name: Weather
+    description: Atmospheric and solar-radiation observation and forecast.
+  - name: UV Index
+    description: Ultraviolet radiation intensity scale (0-11+) standardized by WHO/WMO.
+  - name: Sun Safety
+    description: Recommendations for safe sun exposure, including protection thresholds and skin-type considerations.
+  - name: Solar Astronomy
+    description: Solar position and event times (sunrise, sunset, solar noon, golden hour, twilight phases).
+
+concepts:
+  - name: UV Index
+    abbrev: UVI
+    description: International standard for ultraviolet radiation intensity at the Earth's surface.
+  - name: Ozone Layer
+    description: Stratospheric ozone column that absorbs ultraviolet radiation; measured in Dobson units.
+  - name: Dobson Unit
+    abbrev: DU
+    description: Standard unit for measuring total column ozone (1 DU = 0.01 mm of ozone at STP).
+  - name: Fitzpatrick Skin Type
+    description: Classification of human skin (Type 1 through Type 6) by response to UV exposure.
+  - name: Safe Exposure Time
+    description: Estimated minutes of unprotected sun exposure before erythema (sunburn) for a given skin type.
+  - name: Sun Protection Window
+    description: Time of day when the UV index exceeds a configurable threshold and sun protection is recommended.
+  - name: Solar Noon
+    description: The moment the sun is highest in the sky for a given location; UV is generally at its daily peak.
+  - name: Sun Position
+    description: Azimuth and altitude of the sun relative to a coordinate, in radians.
+  - name: Geolocation
+    description: Latitude/longitude coordinate at which UV data is requested.
+  - name: Altitude
+    description: Elevation above sea level used to adjust UV intensity calculations.
+
+properties:
+  - name: uv
+    description: Current UV index at the requested coordinate and time.
+  - name: uv_max
+    description: Daily maximum UV index (at solar noon).
+  - name: ozone
+    description: Total column ozone in Dobson units.
+  - name: safe_exposure_time
+    description: Object containing minutes-to-burn per Fitzpatrick skin type (st1-st6).
+  - name: sun_position
+    description: Solar azimuth/altitude at the requested time.
+
+skinTypes:
+  - id: st1
+    name: Skin Type 1
+    description: Pale white skin, blue eyes, red or blond hair; always burns, never tans.
+  - id: st2
+    name: Skin Type 2
+    description: Fair skin; usually burns, tans minimally.
+  - id: st3
+    name: Skin Type 3
+    description: Light brown skin; sometimes mild burn, tans uniformly.
+  - id: st4
+    name: Skin Type 4
+    description: Moderate brown skin; rarely burns, tans well.
+  - id: st5
+    name: Skin Type 5
+    description: Dark brown skin; very rarely burns, tans profusely.
+  - id: st6
+    name: Skin Type 6
+    description: Deeply pigmented dark brown to black skin; never burns.
+
+operations:
+  - name: getCurrentUVIndex
+    verb: get
+    object: current uv index
+  - name: getUVForecast
+    verb: get
+    object: uv forecast
+  - name: getProtectionWindow
+    verb: get
+    object: protection window
+  - name: getApiStatus
+    verb: get
+    object: api status
+  - name: getApiStatistics
+    verb: get
+    object: api statistics
+
+tags:
+  - Weather
+  - UV Index
+  - Sun
+  - Solar
+  - Geolocation
+  - Forecast
+  - Protection
+  - Account
+  - Public APIs

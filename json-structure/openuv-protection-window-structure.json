@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-structure.org/meta/draft-00/schema",
+  "title": "OpenUV Protection Window Structure",
+  "description": "Structured representation of the daily UV protection window.",
+  "type": "object",
+  "name": "ProtectionWindow",
+  "properties": {
+    "from_time": { "type": "string", "format": "date-time" },
+    "from_uv": { "type": "number", "unit": "uv-index" },
+    "to_time": { "type": "string", "format": "date-time" },
+    "to_uv": { "type": "number", "unit": "uv-index" }
+  }
+}

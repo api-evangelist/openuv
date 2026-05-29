@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/openuv/main/json-schema/openuv-api-statistics-schema.json",
+  "title": "OpenUV API Statistics",
+  "description": "Per-key request and cost statistics.",
+  "type": "object",
+  "required": ["result"],
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "requests_today": { "type": "integer" },
+        "requests_yesterday": { "type": "integer" },
+        "requests_month": { "type": "integer" },
+        "requests_last_month": { "type": "integer" },
+        "cost_today": { "type": "number" },
+        "cost_yesterday": { "type": "number" },
+        "cost_month": { "type": "number" },
+        "cost_last_month": { "type": "number" }
+      }
+    }
+  }
+}

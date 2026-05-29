@@ -1,0 +1,61 @@
+{
+  "provider": "OpenUV",
+  "providerId": "openuv",
+  "kind": "json-structure",
+  "description": "Structural overview of the OpenUV API surface; extracted from openapi/.",
+  "schemaCount": 9,
+  "operationCount": 5,
+  "schemas": [
+    "UVIndexResponse",
+    "UVIndex",
+    "SafeExposureTime",
+    "SunInfo",
+    "SunTimes",
+    "SunPosition",
+    "UVForecastResponse",
+    "UVForecastEntry",
+    "ProtectionWindowResponse",
+    "ProtectionWindow",
+    "StatusResponse",
+    "StatisticsResponse",
+    "Statistics",
+    "Error"
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/uv",
+      "operationId": "getCurrentUVIndex",
+      "summary": "Get Current UV Index",
+      "tags": ["UV Index"]
+    },
+    {
+      "method": "GET",
+      "path": "/forecast",
+      "operationId": "getUVForecast",
+      "summary": "Get UV Index Forecast",
+      "tags": ["UV Index"]
+    },
+    {
+      "method": "GET",
+      "path": "/protection",
+      "operationId": "getProtectionWindow",
+      "summary": "Get Sun Protection Window",
+      "tags": ["Protection"]
+    },
+    {
+      "method": "GET",
+      "path": "/status",
+      "operationId": "getApiStatus",
+      "summary": "Get API Status",
+      "tags": ["Account"]
+    },
+    {
+      "method": "GET",
+      "path": "/stat",
+      "operationId": "getApiStatistics",
+      "summary": "Get API Usage Statistics",
+      "tags": ["Account"]
+    }
+  ]
+}

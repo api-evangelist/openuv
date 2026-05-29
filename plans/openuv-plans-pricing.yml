@@ -1,0 +1,155 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: OpenUV
+providerId: openuv
+created: '2026-05-29'
+modified: '2026-05-29'
+reconciled: false
+tags:
+  - Weather
+  - UV Index
+description: OpenUV plans by daily request quota. The free tier provides 50 requests per day; adding billing details unlocks 15,000 requests per day; an Unlimited Enterprise plan is available via contact.
+sources:
+  - https://www.openuv.io/console
+  - https://www.openuv.io/blog
+plans:
+  - id: openuv-free
+    name: Free
+    type: freemium
+    description: 50 API requests per day, no credit card required. Ideal for hobby projects and integrations like Home Assistant.
+    entries:
+      - label: Requests
+        name: requests
+        type: quota
+        metric: request
+        limit: 50
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Real-time UV index
+      - name: UV forecast
+      - name: Protection window
+      - name: Safe exposure times by Fitzpatrick skin type
+      - name: Ozone level
+  - id: openuv-hobbyist
+    name: Hobbyist
+    type: paid
+    description: ~$4.99/month for higher daily quotas, suited to indie weather and smart-home apps.
+    entries:
+      - label: Monthly
+        name: monthly
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '4.99'
+        userMultiplied: false
+      - label: Requests
+        name: requests
+        type: quota
+        metric: request
+        limit: 1500
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: All Free features
+      - name: Higher daily quota
+      - name: Email support
+  - id: openuv-personal
+    name: Personal
+    type: paid
+    description: ~$9.99/month for personal projects requiring sustained polling.
+    entries:
+      - label: Monthly
+        name: monthly
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '9.99'
+        userMultiplied: false
+      - label: Requests
+        name: requests
+        type: quota
+        metric: request
+        limit: 5000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: All Hobbyist features
+      - name: Higher per-day quota
+      - name: Standard support
+  - id: openuv-pro
+    name: Pro
+    type: paid
+    description: ~$49.99/month for production workloads. Add billing details to unlock 15,000 requests per day per OpenUV's quota message.
+    entries:
+      - label: Monthly
+        name: monthly
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '49.99'
+        userMultiplied: false
+      - label: Requests
+        name: requests
+        type: quota
+        metric: request
+        limit: 15000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: All Personal features
+      - name: 15,000 requests per day
+      - name: Priority support
+      - name: Suitable for production weather apps
+  - id: openuv-enterprise
+    name: Enterprise
+    type: enterprise
+    description: Unlimited Plan with custom pricing. Contact support@openuv.io to upgrade.
+    entries:
+      - label: Custom
+        name: custom
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Requests
+        name: requests
+        type: quota
+        metric: request
+        limit: -1
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Unlimited daily quota
+      - name: Custom SLA
+      - name: Direct support channel
+      - name: Negotiated pricing

@@ -1,0 +1,132 @@
+extends:
+  - "spectral:oas"
+documentationUrl: https://www.openuv.io
+functions: []
+rules:
+  openuv-title-must-exist:
+    description: All OpenAPI specs MUST have an info.title.
+    given: $.info
+    severity: error
+    then:
+      field: title
+      function: truthy
+  openuv-info-contact-required:
+    description: OpenUV specs MUST provide a support contact.
+    given: $.info
+    severity: warn
+    then:
+      field: contact
+      function: truthy
+  openuv-server-must-be-https:
+    description: All OpenUV servers MUST use HTTPS.
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+  openuv-server-must-be-api-openuv:
+    description: OpenUV operations are served from api.openuv.io/api/v1.
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://api\\.openuv\\.io/api/v1$"
+  openuv-operation-operationid-required:
+    description: All operations MUST declare an operationId.
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: error
+    then:
+      field: operationId
+      function: truthy
+  openuv-operation-summary-title-case:
+    description: Operation summaries MUST be in Title Case.
+    given: $.paths[*][get,post,put,patch,delete].summary
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^([A-Z0-9][a-zA-Z0-9]*)( (?:[A-Z][a-zA-Z0-9]*|UV|API|ID|URL|JSON))*$"
+  openuv-operation-tags-required:
+    description: Every operation MUST have at least one tag.
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: error
+    then:
+      field: tags
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          minItems: 1
+  openuv-only-get-allowed:
+    description: OpenUV is a read-only API; only GET operations are allowed.
+    given: $.paths[*]
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          not:
+            anyOf:
+              - required: [post]
+              - required: [put]
+              - required: [patch]
+              - required: [delete]
+  openuv-api-key-auth-required:
+    description: OpenUV uses an x-access-token API key in the header for authentication.
+    given: $.components.securitySchemes
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            ApiKeyAuth:
+              type: object
+              required: [type, in, name]
+              properties:
+                type:
+                  const: apiKey
+                in:
+                  const: header
+                name:
+                  const: x-access-token
+          required: [ApiKeyAuth]
+  openuv-lat-lng-required:
+    description: UV endpoints MUST require lat and lng query parameters.
+    given: $.paths[/uv,/forecast,/protection].get.parameters[*]
+    severity: warn
+    then:
+      function: truthy
+  openuv-response-envelope:
+    description: Data responses MUST be wrapped in a `result` envelope.
+    given: $.components.schemas[?(@property.match(/Response$/))]
+    severity: warn
+    then:
+      field: required
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            const: result
+  openuv-skin-types-complete:
+    description: SafeExposureTime MUST cover all six Fitzpatrick skin types (st1-st6).
+    given: $.components.schemas.SafeExposureTime.properties
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [st1, st2, st3, st4, st5, st6]
+  openuv-rate-limit-documented:
+    description: Specs MUST document the 429 Too Many Requests response.
+    given: $.paths[*].get.responses
+    severity: warn
+    then:
+      field: "429"
+      function: truthy

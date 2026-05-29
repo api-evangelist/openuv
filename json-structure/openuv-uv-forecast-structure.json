@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/draft-00/schema",
+  "title": "OpenUV UV Forecast Structure",
+  "description": "Structured representation of a UV index forecast series.",
+  "type": "array",
+  "name": "UVForecast",
+  "items": {
+    "type": "object",
+    "name": "UVForecastEntry",
+    "properties": {
+      "uv": { "type": "number", "unit": "uv-index" },
+      "uv_time": { "type": "string", "format": "date-time" },
+      "sun_position": {
+        "type": "object",
+        "properties": {
+          "azimuth": { "type": "number", "unit": "radians" },
+          "altitude": { "type": "number", "unit": "radians" }
+        }
+      }
+    }
+  }
+}

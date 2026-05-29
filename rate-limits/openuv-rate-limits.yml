@@ -1,0 +1,81 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: OpenUV
+providerId: openuv
+created: '2026-05-29'
+modified: '2026-05-29'
+tags:
+  - Weather
+  - UV Index
+  - Rate Limiting
+  - Quotas
+description: Machine-readable rate limit definitions for the OpenUV API. OpenUV enforces a daily request quota per API key. The free tier is 50 requests per day; adding billing details unlocks 15,000 requests per day; the Unlimited Plan is custom.
+headers:
+  limit: X-RateLimit-Limit
+  remaining: X-RateLimit-Remaining
+  reset: X-RateLimit-Reset
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+  serviceUnavailable: 503
+errorBody:
+  format: json
+  example: |
+    { "error": "Daily API quota exceeded. Add billing details to get 15000 reqs/day or contact support@openuv.io to upgrade to Unlimited Plan." }
+limits:
+  - tier: free
+    name: Free Daily Quota
+    scope: api-key
+    metric: requests_per_day
+    limit: 50
+    timeFrame: day
+    applies:
+      - OpenUV
+  - tier: hobbyist
+    name: Hobbyist Daily Quota
+    scope: api-key
+    metric: requests_per_day
+    limit: 1500
+    timeFrame: day
+    applies:
+      - OpenUV
+  - tier: personal
+    name: Personal Daily Quota
+    scope: api-key
+    metric: requests_per_day
+    limit: 5000
+    timeFrame: day
+    applies:
+      - OpenUV
+  - tier: pro
+    name: Pro Daily Quota (Billing Enabled)
+    scope: api-key
+    metric: requests_per_day
+    limit: 15000
+    timeFrame: day
+    applies:
+      - OpenUV
+  - tier: enterprise
+    name: Unlimited Plan
+    scope: contract
+    metric: requests_per_day
+    limit: -1
+    timeFrame: day
+    applies:
+      - OpenUV
+policies:
+  - name: Quota Reset
+    description: Daily quotas reset at 00:00 UTC. The /stat endpoint exposes requests_today and requests_yesterday counters.
+  - name: Health Check Recommended
+    description: The /status endpoint is unmetered and safe to call before consuming quota on metered endpoints.
+  - name: Backoff Strategy
+    description: On 429 responses clients should stop polling for the remainder of the UTC day and resume the next day, or upgrade billing details.
+  - name: Fair Use
+    description: Even on the Unlimited Plan, sustained usage that materially impacts shared infrastructure may be subject to fair-use throttling.
+  - name: Integration Guidance
+    description: Smart-home integrations (Home Assistant, openHAB, Homey) are advised not to auto-poll the free tier; manual update triggers are the recommended pattern.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

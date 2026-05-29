@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/openuv/main/json-schema/openuv-uv-forecast-schema.json",
+  "title": "OpenUV UV Forecast",
+  "description": "Time-series UV index forecast for a coordinate.",
+  "type": "object",
+  "required": ["result"],
+  "properties": {
+    "result": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["uv", "uv_time", "sun_position"],
+        "properties": {
+          "uv": { "type": "number" },
+          "uv_time": { "type": "string", "format": "date-time" },
+          "sun_position": {
+            "type": "object",
+            "properties": {
+              "azimuth": { "type": "number" },
+              "altitude": { "type": "number" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

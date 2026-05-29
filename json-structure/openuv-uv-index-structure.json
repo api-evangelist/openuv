@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-structure.org/meta/draft-00/schema",
+  "title": "OpenUV UV Index Structure",
+  "description": "Structured representation of the current UV index response.",
+  "type": "object",
+  "name": "UVIndex",
+  "properties": {
+    "uv": { "type": "number", "unit": "uv-index" },
+    "uv_time": { "type": "string", "format": "date-time" },
+    "uv_max": { "type": "number", "unit": "uv-index" },
+    "uv_max_time": { "type": "string", "format": "date-time" },
+    "ozone": { "type": "number", "unit": "DU" },
+    "ozone_time": { "type": "string", "format": "date-time" },
+    "safe_exposure_time": {
+      "type": "object",
+      "name": "SafeExposureTime",
+      "properties": {
+        "st1": { "type": "integer", "unit": "minutes", "description": "Fitzpatrick Skin Type 1" },
+        "st2": { "type": "integer", "unit": "minutes", "description": "Fitzpatrick Skin Type 2" },
+        "st3": { "type": "integer", "unit": "minutes", "description": "Fitzpatrick Skin Type 3" },
+        "st4": { "type": "integer", "unit": "minutes", "description": "Fitzpatrick Skin Type 4" },
+        "st5": { "type": "integer", "unit": "minutes", "description": "Fitzpatrick Skin Type 5" },
+        "st6": { "type": "integer", "unit": "minutes", "description": "Fitzpatrick Skin Type 6" }
+      }
+    },
+    "sun_info": {
+      "type": "object",
+      "name": "SunInfo",
+      "properties": {
+        "sun_times": { "type": "object" },
+        "sun_position": {
+          "type": "object",
+          "properties": {
+            "azimuth": { "type": "number", "unit": "radians" },
+            "altitude": { "type": "number", "unit": "radians" }
+          }
+        }
+      }
+    }
+  }
+}

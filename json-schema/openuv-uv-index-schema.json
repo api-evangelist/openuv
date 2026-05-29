@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/openuv/main/json-schema/openuv-uv-index-schema.json",
+  "title": "OpenUV UV Index",
+  "description": "Current UV index reading for a coordinate, including ozone, sun position and Fitzpatrick skin-type safe exposure times.",
+  "type": "object",
+  "required": ["result"],
+  "properties": {
+    "result": {
+      "type": "object",
+      "required": ["uv", "uv_time", "uv_max", "uv_max_time", "ozone", "ozone_time", "safe_exposure_time", "sun_info"],
+      "properties": {
+        "uv": { "type": "number", "description": "Current UV index." },
+        "uv_time": { "type": "string", "format": "date-time" },
+        "uv_max": { "type": "number", "description": "Daily maximum UV index (at solar noon)." },
+        "uv_max_time": { "type": "string", "format": "date-time" },
+        "ozone": { "type": "number", "description": "Total column ozone in Dobson units." },
+        "ozone_time": { "type": "string", "format": "date-time" },
+        "safe_exposure_time": {
+          "type": "object",
+          "description": "Minutes of safe unprotected sun exposure per Fitzpatrick skin type.",
+          "properties": {
+            "st1": { "type": ["integer", "null"] },
+            "st2": { "type": ["integer", "null"] },
+            "st3": { "type": ["integer", "null"] },
+            "st4": { "type": ["integer", "null"] },
+            "st5": { "type": ["integer", "null"] },
+            "st6": { "type": ["integer", "null"] }
+          }
+        },
+        "sun_info": {
+          "type": "object",
+          "properties": {
+            "sun_times": {
+              "type": "object",
+              "properties": {
+                "solarNoon": { "type": "string", "format": "date-time" },
+                "nadir": { "type": "string", "format": "date-time" },
+                "sunrise": { "type": "string", "format": "date-time" },
+                "sunset": { "type": "string", "format": "date-time" },
+                "sunriseEnd": { "type": "string", "format": "date-time" },
+                "sunsetStart": { "type": "string", "format": "date-time" },
+                "dawn": { "type": "string", "format": "date-time" },
+                "dusk": { "type": "string", "format": "date-time" },
+                "nauticalDawn": { "type": "string", "format": "date-time" },
+                "nauticalDusk": { "type": "string", "format": "date-time" },
+                "nightEnd": { "type": "string", "format": "date-time" },
+                "night": { "type": "string", "format": "date-time" },
+                "goldenHourEnd": { "type": "string", "format": "date-time" },
+                "goldenHour": { "type": "string", "format": "date-time" }
+              }
+            },
+            "sun_position": {
+              "type": "object",
+              "properties": {
+                "azimuth": { "type": "number", "description": "Solar azimuth in radians." },
+                "altitude": { "type": "number", "description": "Solar altitude in radians." }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "openuv": "https://www.openuv.io/ns#",
+    "schema": "https://schema.org/",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "sosa": "http://www.w3.org/ns/sosa/",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "UVIndex": "openuv:UVIndex",
+    "UVForecastEntry": "openuv:UVForecastEntry",
+    "ProtectionWindow": "openuv:ProtectionWindow",
+    "SafeExposureTime": "openuv:SafeExposureTime",
+    "SunInfo": "openuv:SunInfo",
+    "SunPosition": "openuv:SunPosition",
+    "SunTimes": "openuv:SunTimes",
+    "Ozone": "openuv:Ozone",
+
+    "uv": {
+      "@id": "openuv:uv",
+      "@type": "xsd:double"
+    },
+    "uv_time": {
+      "@id": "openuv:uvTime",
+      "@type": "xsd:dateTime"
+    },
+    "uv_max": {
+      "@id": "openuv:uvMax",
+      "@type": "xsd:double"
+    },
+    "uv_max_time": {
+      "@id": "openuv:uvMaxTime",
+      "@type": "xsd:dateTime"
+    },
+    "ozone": {
+      "@id": "openuv:ozone",
+      "@type": "xsd:double"
+    },
+    "ozone_time": {
+      "@id": "openuv:ozoneTime",
+      "@type": "xsd:dateTime"
+    },
+    "safe_exposure_time": {
+      "@id": "openuv:safeExposureTime",
+      "@type": "@id"
+    },
+    "st1": { "@id": "openuv:skinType1Minutes", "@type": "xsd:integer" },
+    "st2": { "@id": "openuv:skinType2Minutes", "@type": "xsd:integer" },
+    "st3": { "@id": "openuv:skinType3Minutes", "@type": "xsd:integer" },
+    "st4": { "@id": "openuv:skinType4Minutes", "@type": "xsd:integer" },
+    "st5": { "@id": "openuv:skinType5Minutes", "@type": "xsd:integer" },
+    "st6": { "@id": "openuv:skinType6Minutes", "@type": "xsd:integer" },
+
+    "sun_info": { "@id": "openuv:sunInfo" },
+    "sun_times": { "@id": "openuv:sunTimes" },
+    "sun_position": { "@id": "openuv:sunPosition" },
+    "azimuth": { "@id": "openuv:azimuth", "@type": "xsd:double" },
+    "altitude": { "@id": "openuv:altitude", "@type": "xsd:double" },
+
+    "solarNoon": { "@id": "openuv:solarNoon", "@type": "xsd:dateTime" },
+    "nadir": { "@id": "openuv:nadir", "@type": "xsd:dateTime" },
+    "sunrise": { "@id": "openuv:sunrise", "@type": "xsd:dateTime" },
+    "sunset": { "@id": "openuv:sunset", "@type": "xsd:dateTime" },
+    "sunriseEnd": { "@id": "openuv:sunriseEnd", "@type": "xsd:dateTime" },
+    "sunsetStart": { "@id": "openuv:sunsetStart", "@type": "xsd:dateTime" },
+    "dawn": { "@id": "openuv:dawn", "@type": "xsd:dateTime" },
+    "dusk": { "@id": "openuv:dusk", "@type": "xsd:dateTime" },
+    "nauticalDawn": { "@id": "openuv:nauticalDawn", "@type": "xsd:dateTime" },
+    "nauticalDusk": { "@id": "openuv:nauticalDusk", "@type": "xsd:dateTime" },
+    "nightEnd": { "@id": "openuv:nightEnd", "@type": "xsd:dateTime" },
+    "night": { "@id": "openuv:night", "@type": "xsd:dateTime" },
+    "goldenHourEnd": { "@id": "openuv:goldenHourEnd", "@type": "xsd:dateTime" },
+    "goldenHour": { "@id": "openuv:goldenHour", "@type": "xsd:dateTime" },
+
+    "from_time": { "@id": "openuv:protectionWindowStart", "@type": "xsd:dateTime" },
+    "from_uv": { "@id": "openuv:protectionWindowStartUV", "@type": "xsd:double" },
+    "to_time": { "@id": "openuv:protectionWindowEnd", "@type": "xsd:dateTime" },
+    "to_uv": { "@id": "openuv:protectionWindowEndUV", "@type": "xsd:double" },
+
+    "lat": { "@id": "geo:lat", "@type": "xsd:double" },
+    "lng": { "@id": "geo:long", "@type": "xsd:double" },
+    "alt": { "@id": "geo:alt", "@type": "xsd:double" }
+  }
+}
