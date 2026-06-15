@@ -1,0 +1,1192 @@
+{
+  "item": [
+    {
+      "id": "6b926952-cf0f-48c4-ad29-ce6917b1bd84",
+      "name": "UV Index",
+      "description": {
+        "content": "Current and forecasted UV index data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c1f4bb9e-bd0b-4ebd-aec2-97ad2a612f0e",
+          "name": "Get Current UV Index",
+          "request": {
+            "name": "Get Current UV Index",
+            "description": {
+              "content": "Returns the current UV index, daily maximum UV, ozone level, sun position\nand Fitzpatrick skin-type-specific safe exposure times for the given coordinate.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "uv"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<float>",
+                  "description": "(Required) Latitude in decimal degrees (-90 to 90)."
+                },
+                {
+                  "disabled": false,
+                  "key": "lng",
+                  "value": "<float>",
+                  "description": "(Required) Longitude in decimal degrees (-180 to 180)."
+                },
+                {
+                  "disabled": false,
+                  "key": "alt",
+                  "value": "<float>",
+                  "description": "Altitude in meters above sea level. Improves UV accuracy for high-elevation locations."
+                },
+                {
+                  "disabled": false,
+                  "key": "dt",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 timestamp for the requested UV reading or forecast anchor. Defaults to the current time."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "48afc7eb-69e8-4e36-9313-2daa3322b39c",
+              "name": "Current UV index reading",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "uv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "2026-05-29T18:00:00.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": {\n    \"uv\": 8.2342,\n    \"uv_time\": \"1953-03-17T15:07:52.462Z\",\n    \"uv_max\": 10.3335,\n    \"uv_max_time\": \"2011-10-17T00:06:25.050Z\",\n    \"ozone\": 300.7,\n    \"ozone_time\": \"2018-03-30T12:56:37.286Z\",\n    \"safe_exposure_time\": {\n      \"st1\": 2956,\n      \"st2\": 6118,\n      \"st3\": 8424,\n      \"st4\": 2472,\n      \"st5\": 997,\n      \"st6\": 315\n    },\n    \"sun_info\": {\n      \"sun_times\": {\n        \"solarNoon\": \"2003-07-08T05:35:26.201Z\",\n        \"nadir\": \"1962-01-18T14:11:38.405Z\",\n        \"sunrise\": \"1993-03-02T08:57:19.066Z\",\n        \"sunset\": \"1983-06-10T11:02:19.766Z\",\n        \"sunriseEnd\": \"1955-10-11T12:57:59.047Z\",\n        \"sunsetStart\": \"1965-05-14T12:48:14.468Z\",\n        \"dawn\": \"1959-07-18T13:21:11.686Z\",\n        \"dusk\": \"2025-06-01T01:46:25.300Z\",\n        \"nauticalDawn\": \"1983-02-06T22:41:52.513Z\",\n        \"nauticalDusk\": \"1978-12-13T22:36:35.612Z\",\n        \"nightEnd\": \"1997-06-29T02:07:28.680Z\",\n        \"night\": \"1968-03-19T18:10:48.871Z\",\n        \"goldenHourEnd\": \"1973-10-20T13:20:06.884Z\",\n        \"goldenHour\": \"1947-11-25T17:20:25.661Z\"\n      },\n      \"sun_position\": {\n        \"azimuth\": 6690.995595088034,\n        \"altitude\": 7636.471835421341\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e656527-5da4-4f1e-ba74-cd365c1c2e70",
+              "name": "Invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "uv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "2026-05-29T18:00:00.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc51dc2c-c1d1-4e99-a019-e95469676b1c",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "uv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "2026-05-29T18:00:00.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"User with API Key not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3d1a91b-8fef-4d37-8166-f19087864049",
+              "name": "Daily quota exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "uv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "2026-05-29T18:00:00.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Daily API quota exceeded. Add billing details to get 15000 reqs/day or contact support@openuv.io to upgrade to Unlimited Plan.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8075f02f-b90f-451a-9536-bc97b26d40fd",
+          "name": "Get UV Index Forecast",
+          "request": {
+            "name": "Get UV Index Forecast",
+            "description": {
+              "content": "Returns a time-series UV index forecast for the given coordinate. Each entry\ncontains the UV value, ISO 8601 timestamp and sun position at the forecast step.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "forecast"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<float>",
+                  "description": "(Required) Latitude in decimal degrees (-90 to 90)."
+                },
+                {
+                  "disabled": false,
+                  "key": "lng",
+                  "value": "<float>",
+                  "description": "(Required) Longitude in decimal degrees (-180 to 180)."
+                },
+                {
+                  "disabled": false,
+                  "key": "alt",
+                  "value": "<float>",
+                  "description": "Altitude in meters above sea level. Improves UV accuracy for high-elevation locations."
+                },
+                {
+                  "disabled": false,
+                  "key": "dt",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 timestamp for the requested UV reading or forecast anchor. Defaults to the current time."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d6d07ac4-5389-483f-996d-f321cc98b8d9",
+              "name": "Forecasted UV index series",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forecast"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "2026-05-29T18:00:00.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": [\n    {\n      \"uv\": 8635.971500535961,\n      \"uv_time\": \"2021-04-21T14:51:03.098Z\",\n      \"sun_position\": {\n        \"azimuth\": 4262.0151493285675,\n        \"altitude\": 6149.0213393561335\n      }\n    },\n    {\n      \"uv\": 1272.0205726812094,\n      \"uv_time\": \"1966-11-28T04:34:35.222Z\",\n      \"sun_position\": {\n        \"azimuth\": 2316.6666577175256,\n        \"altitude\": 5780.951315058512\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70b829f0-d2ef-4f10-8041-098627192d1e",
+              "name": "Invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forecast"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "2026-05-29T18:00:00.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89b05e16-2b6d-4c86-ad3a-72fcb2e6f361",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forecast"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "2026-05-29T18:00:00.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"User with API Key not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29b98006-70d0-453f-87e1-301ae1e7800c",
+              "name": "Daily quota exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forecast"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "2026-05-29T18:00:00.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Daily API quota exceeded. Add billing details to get 15000 reqs/day or contact support@openuv.io to upgrade to Unlimited Plan.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "cb2cba8a-9b7f-4c90-adbc-cb43e22aa8cd",
+      "name": "Protection",
+      "description": {
+        "content": "Sun protection window recommendations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6500303d-dd2e-4f9a-ab62-0e328decab79",
+          "name": "Get Sun Protection Window",
+          "request": {
+            "name": "Get Sun Protection Window",
+            "description": {
+              "content": "Returns the start and end times of the recommended sun-protection window for\nthe day, defined as the period when UV index crosses the configurable `from`\nand `to` thresholds (default 3.5).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protection"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<float>",
+                  "description": "(Required) Latitude in decimal degrees (-90 to 90)."
+                },
+                {
+                  "disabled": false,
+                  "key": "lng",
+                  "value": "<float>",
+                  "description": "(Required) Longitude in decimal degrees (-180 to 180)."
+                },
+                {
+                  "disabled": false,
+                  "key": "alt",
+                  "value": "<float>",
+                  "description": "Altitude in meters above sea level. Improves UV accuracy for high-elevation locations."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "3.5",
+                  "description": "Lower UV index bound for the protection window. Defaults to 3.5."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "3.5",
+                  "description": "Upper UV index bound for the protection window. Defaults to 3.5."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "02511362-4470-43b3-9a12-fe68d5815af2",
+              "name": "Protection window for the day",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "from",
+                      "value": "3.5"
+                    },
+                    {
+                      "key": "to",
+                      "value": "3.5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": {\n    \"from_time\": \"2018-10-07T08:36:05.756Z\",\n    \"from_uv\": 7946.975677614448,\n    \"to_time\": \"1946-10-03T07:33:24.867Z\",\n    \"to_uv\": 6601.631324230968\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d7642b0-695d-4bea-b30d-4611c41ee50c",
+              "name": "Invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "from",
+                      "value": "3.5"
+                    },
+                    {
+                      "key": "to",
+                      "value": "3.5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04dd4451-0a73-473b-be5d-89ecccfb6196",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "from",
+                      "value": "3.5"
+                    },
+                    {
+                      "key": "to",
+                      "value": "3.5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"User with API Key not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c24369e-5647-4e7f-927f-e0d986f0cb81",
+              "name": "Daily quota exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "39.7392"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-104.9903"
+                    },
+                    {
+                      "key": "alt",
+                      "value": "1609"
+                    },
+                    {
+                      "key": "from",
+                      "value": "3.5"
+                    },
+                    {
+                      "key": "to",
+                      "value": "3.5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Daily API quota exceeded. Add billing details to get 15000 reqs/day or contact support@openuv.io to upgrade to Unlimited Plan.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "a4cda58b-b253-46da-a6c9-18a2dd2cc644",
+      "name": "Account",
+      "description": {
+        "content": "API status and per-key usage statistics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "08af8b22-4a79-4664-ae7e-02f6ff57c2c5",
+          "name": "Get API Status",
+          "request": {
+            "name": "Get API Status",
+            "description": {
+              "content": "Lightweight health check that returns whether the OpenUV API is currently\navailable. Recommended before making metered requests on slow networks.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a057d223-91ff-439a-baa4-7caa71471b5d",
+              "name": "API availability",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d9b601dd-301d-4130-aed6-35a901018a40",
+          "name": "Get API Usage Statistics",
+          "request": {
+            "name": "Get API Usage Statistics",
+            "description": {
+              "content": "Returns per-key request volumes and accrued cost for today, yesterday,\nthe current month, and the previous month.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0cac02b3-26c2-47b5-b24e-ccc24eb3fe60",
+              "name": "Usage statistics for the authenticated key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": {\n    \"requests_today\": 83,\n    \"requests_yesterday\": 419,\n    \"requests_month\": 6738,\n    \"requests_last_month\": 4344,\n    \"cost_today\": 1375.221017519277,\n    \"cost_yesterday\": 3925.7048018010564,\n    \"cost_month\": 7679.442641362016,\n    \"cost_last_month\": 9436.164057176398\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce457a76-4011-4d03-9486-c62863df567d",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"User with API Key not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openuv.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-access-token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "48efbd8c-c7f9-4123-9e36-fcc0bdde5b6c",
+    "name": "OpenUV API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Global real-time UV index API. Returns current UV index, daily maximum UV, ozone level,\nsafe sun-exposure times per Fitzpatrick skin type, sun position, and a recommended sun\nprotection window for any geographic coordinate. All endpoints are GET-only and require\nan OpenUV API key supplied in the `x-access-token` header.\n\n\nContact Support:\n Name: OpenUV Support\n Email: support@openuv.io",
+      "type": "text/plain"
+    }
+  }
+}
