@@ -60,15 +60,15 @@ apis:
         url: json-structure/openuv-protection-window-structure.json
       - type: JSONLD
         url: json-ld/openuv-context.jsonld
-      - type: Example
+      - type: Examples
         url: examples/openuv-uv-index-example.json
-      - type: Example
+      - type: Examples
         url: examples/openuv-uv-forecast-example.json
-      - type: Example
+      - type: Examples
         url: examples/openuv-protection-window-example.json
-      - type: Example
+      - type: Examples
         url: examples/openuv-api-statistics-example.json
-      - type: Example
+      - type: Examples
         url: examples/openuv-api-status-example.json
       - type: JSONSchema
         url: json-schema/openuv-api-statistics-schema.json
@@ -87,7 +87,7 @@ common:
     url: https://www.openuv.io
   - type: Console
     url: https://www.openuv.io/console
-  - type: SignUp
+  - type: Signup
     url: https://www.openuv.io/auth/signup
   - type: Login
     url: https://www.openuv.io/auth/signin
@@ -103,9 +103,9 @@ common:
     url: mailto:support@openuv.io
   - type: Blog
     url: https://www.openuv.io/blog
-  - type: SDK
+  - type: SDKs
     url: https://github.com/aershov24/openuv-node
-  - type: SDK
+  - type: SDKs
     url: https://github.com/bachya/pyopenuv
   - type: Tools
     url: https://github.com/ag2-mcp-servers/openuv---global-real-time-uv-index-forecast-api
