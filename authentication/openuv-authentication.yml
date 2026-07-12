@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/openuv-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: x-access-token
+  description: OpenUV API key issued from https://www.openuv.io/console
+  sources:
+  - openapi/openuv-openapi.yml

@@ -81,6 +81,10 @@ apis:
       - type: FinOps
         url: finops/openuv-finops.yml
 common:
+  - type: DomainSecurity
+    url: security/openuv-domain-security.yml
+  - type: Authentication
+    url: authentication/openuv-authentication.yml
   - type: Website
     url: https://www.openuv.io
   - type: Portal
