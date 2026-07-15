@@ -81,6 +81,8 @@ apis:
       - type: FinOps
         url: finops/openuv-finops.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/openuv-agentic-access.yml
   - type: DomainSecurity
     url: security/openuv-domain-security.yml
   - type: Authentication
