@@ -1,0 +1,139 @@
+openapi: 3.1.0
+info:
+  title: OpenUV Account API
+  description: 'Global real-time UV index API. Returns current UV index, daily maximum UV, ozone level,
+
+    safe sun-exposure times per Fitzpatrick skin type, sun position, and a recommended sun
+
+    protection window for any geographic coordinate. All endpoints are GET-only and require
+
+    an OpenUV API key supplied in the `x-access-token` header.
+
+    '
+  version: 1.0.0
+  contact:
+    name: OpenUV Support
+    url: https://www.openuv.io
+    email: support@openuv.io
+  license:
+    name: Proprietary
+    url: https://www.openuv.io
+servers:
+- url: https://api.openuv.io/api/v1
+  description: OpenUV Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Account
+  description: API status and per-key usage statistics
+paths:
+  /status:
+    get:
+      tags:
+      - Account
+      operationId: getApiStatus
+      summary: Get API Status
+      description: 'Lightweight health check that returns whether the OpenUV API is currently
+
+        available. Recommended before making metered requests on slow networks.
+
+        '
+      security: []
+      responses:
+        '200':
+          description: API availability
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+  /stat:
+    get:
+      tags:
+      - Account
+      operationId: getApiStatistics
+      summary: Get API Usage Statistics
+      description: 'Returns per-key request volumes and accrued cost for today, yesterday,
+
+        the current month, and the previous month.
+
+        '
+      responses:
+        '200':
+          description: Usage statistics for the authenticated key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsResponse'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  responses:
+    Forbidden:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: User with API Key not found
+  schemas:
+    StatisticsResponse:
+      type: object
+      required:
+      - result
+      properties:
+        result:
+          $ref: '#/components/schemas/Statistics'
+    Statistics:
+      type: object
+      properties:
+        requests_today:
+          type: integer
+          description: Number of API requests made today.
+        requests_yesterday:
+          type: integer
+          description: Number of API requests made yesterday.
+        requests_month:
+          type: integer
+          description: Number of API requests this month.
+        requests_last_month:
+          type: integer
+          description: Number of API requests last month.
+        cost_today:
+          type: number
+          format: float
+          description: USD cost accrued today.
+        cost_yesterday:
+          type: number
+          format: float
+          description: USD cost accrued yesterday.
+        cost_month:
+          type: number
+          format: float
+          description: USD cost accrued this month.
+        cost_last_month:
+          type: number
+          format: float
+          description: USD cost accrued last month.
+    StatusResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          type: boolean
+          description: True when the OpenUV API is available.
+    Error:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-access-token
+      description: OpenUV API key issued from https://www.openuv.io/console

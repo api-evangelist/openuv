@@ -1,0 +1,182 @@
+openapi: 3.1.0
+info:
+  title: OpenUV Account Protection API
+  description: 'Global real-time UV index API. Returns current UV index, daily maximum UV, ozone level,
+
+    safe sun-exposure times per Fitzpatrick skin type, sun position, and a recommended sun
+
+    protection window for any geographic coordinate. All endpoints are GET-only and require
+
+    an OpenUV API key supplied in the `x-access-token` header.
+
+    '
+  version: 1.0.0
+  contact:
+    name: OpenUV Support
+    url: https://www.openuv.io
+    email: support@openuv.io
+  license:
+    name: Proprietary
+    url: https://www.openuv.io
+servers:
+- url: https://api.openuv.io/api/v1
+  description: OpenUV Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Protection
+  description: Sun protection window recommendations
+paths:
+  /protection:
+    get:
+      tags:
+      - Protection
+      operationId: getProtectionWindow
+      summary: Get Sun Protection Window
+      description: 'Returns the start and end times of the recommended sun-protection window for
+
+        the day, defined as the period when UV index crosses the configurable `from`
+
+        and `to` thresholds (default 3.5).
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/Latitude'
+      - $ref: '#/components/parameters/Longitude'
+      - $ref: '#/components/parameters/Altitude'
+      - name: from
+        in: query
+        required: false
+        description: Lower UV index bound for the protection window. Defaults to 3.5.
+        schema:
+          type: number
+          format: float
+          default: 3.5
+          minimum: 0
+          maximum: 20
+      - name: to
+        in: query
+        required: false
+        description: Upper UV index bound for the protection window. Defaults to 3.5.
+        schema:
+          type: number
+          format: float
+          default: 3.5
+          minimum: 0
+          maximum: 20
+      responses:
+        '200':
+          description: Protection window for the day
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProtectionWindowResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    Forbidden:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: User with API Key not found
+    TooManyRequests:
+      description: Daily quota exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Daily API quota exceeded. Add billing details to get 15000 reqs/day or contact support@openuv.io to upgrade to Unlimited Plan.
+    BadRequest:
+      description: Invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    ProtectionWindowResponse:
+      type: object
+      required:
+      - result
+      properties:
+        result:
+          $ref: '#/components/schemas/ProtectionWindow'
+    ProtectionWindow:
+      type: object
+      description: Start/end of the recommended sun-protection window for the day.
+      properties:
+        from_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: ISO 8601 timestamp when UV index crosses the `from` threshold.
+        from_uv:
+          type: number
+          format: float
+          nullable: true
+          description: UV index at the protection window start.
+        to_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: ISO 8601 timestamp when UV index drops below the `to` threshold.
+        to_uv:
+          type: number
+          format: float
+          nullable: true
+          description: UV index at the protection window end.
+    Error:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
+  parameters:
+    Altitude:
+      name: alt
+      in: query
+      required: false
+      description: Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.
+      schema:
+        type: number
+        format: float
+        minimum: 0
+        example: 1609
+    Longitude:
+      name: lng
+      in: query
+      required: true
+      description: Longitude in decimal degrees (-180 to 180).
+      schema:
+        type: number
+        format: float
+        minimum: -180
+        maximum: 180
+        example: -104.9903
+    Latitude:
+      name: lat
+      in: query
+      required: true
+      description: Latitude in decimal degrees (-90 to 90).
+      schema:
+        type: number
+        format: float
+        minimum: -90
+        maximum: 90
+        example: 39.7392
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-access-token
+      description: OpenUV API key issued from https://www.openuv.io/console
