@@ -7,7 +7,20 @@ description: >-
 url: https://www.openuv.io
 baseURL: https://api.openuv.io/api/v1
 humanURL: https://www.openuv.io
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/openuv.png
 specificationVersion: '0.20'
 created: '2026-05-28'
 modified: '2026-05-29'
@@ -27,60 +40,153 @@ tags:
   - Forecast
   - Public APIs
 apis:
-  - aid: openuv:openuv
-    name: OpenUV
-    description: >-
-      Real-time global UV index API returning current UV index, daily maximum UV, ozone, sun position, and safe exposure
-      times by skin type for any latitude/longitude. Supports forecast windows and recommended sun-protection time
-      windows. All endpoints are GET-only, authenticated via x-access-token header.
-    humanURL: https://www.openuv.io
-    baseURL: https://api.openuv.io/api/v1
-    tags:
-      - Weather
-      - UV Index
-      - Forecast
-    properties:
-      - type: Documentation
-        url: https://www.openuv.io
-      - type: APIReference
-        url: https://www.openuv.io/api/json
-      - type: OpenAPI
-        url: openapi/openuv-openapi.yml
-      - type: JSONSchema
-        url: json-schema/openuv-uv-index-schema.json
-      - type: JSONSchema
-        url: json-schema/openuv-uv-forecast-schema.json
-      - type: JSONSchema
-        url: json-schema/openuv-protection-window-schema.json
-      - type: JSONStructure
-        url: json-structure/openuv-uv-index-structure.json
-      - type: JSONStructure
-        url: json-structure/openuv-uv-forecast-structure.json
-      - type: JSONStructure
-        url: json-structure/openuv-protection-window-structure.json
-      - type: JSONLD
-        url: json-ld/openuv-context.jsonld
-      - type: Examples
-        url: examples/openuv-uv-index-example.json
-      - type: Examples
-        url: examples/openuv-uv-forecast-example.json
-      - type: Examples
-        url: examples/openuv-protection-window-example.json
-      - type: Examples
-        url: examples/openuv-api-statistics-example.json
-      - type: Examples
-        url: examples/openuv-api-status-example.json
-      - type: JSONSchema
-        url: json-schema/openuv-api-statistics-schema.json
-      - type: Authentication
-        url: https://www.openuv.io/console
-      - type: RateLimits
-        url: rate-limits/openuv-rate-limits.yml
-      - type: Plans
-        url: plans/openuv-plans-pricing.yml
-      - type: FinOps
-        url: finops/openuv-finops.yml
+- aid: openuv:openuv-account-api
+  name: OpenUV Account API
+  description: API status and per-key usage statistics
+  humanURL: https://www.openuv.io
+  baseURL: https://api.openuv.io/api/v1
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/openuv-account-api-openapi.yml
+  - type: Documentation
+    url: https://www.openuv.io
+  - type: APIReference
+    url: https://www.openuv.io/api/json
+  - type: JSONSchema
+    url: json-schema/openuv-uv-index-schema.json
+  - type: JSONSchema
+    url: json-schema/openuv-uv-forecast-schema.json
+  - type: JSONSchema
+    url: json-schema/openuv-protection-window-schema.json
+  - type: JSONStructure
+    url: json-structure/openuv-uv-index-structure.json
+  - type: JSONStructure
+    url: json-structure/openuv-uv-forecast-structure.json
+  - type: JSONStructure
+    url: json-structure/openuv-protection-window-structure.json
+  - type: JSONLD
+    url: json-ld/openuv-context.jsonld
+  - type: Examples
+    url: examples/openuv-uv-index-example.json
+  - type: Examples
+    url: examples/openuv-uv-forecast-example.json
+  - type: Examples
+    url: examples/openuv-protection-window-example.json
+  - type: Examples
+    url: examples/openuv-api-statistics-example.json
+  - type: Examples
+    url: examples/openuv-api-status-example.json
+  - type: JSONSchema
+    url: json-schema/openuv-api-statistics-schema.json
+  - type: Authentication
+    url: https://www.openuv.io/console
+  - type: RateLimits
+    url: rate-limits/openuv-rate-limits.yml
+  - type: Plans
+    url: plans/openuv-plans-pricing.yml
+  - type: FinOps
+    url: finops/openuv-finops.yml
+- aid: openuv:openuv-protection-api
+  name: OpenUV Protection API
+  description: Sun protection window recommendations
+  humanURL: https://www.openuv.io
+  baseURL: https://api.openuv.io/api/v1
+  tags:
+  - Protection
+  properties:
+  - type: OpenAPI
+    url: openapi/openuv-protection-api-openapi.yml
+  - type: Documentation
+    url: https://www.openuv.io
+  - type: APIReference
+    url: https://www.openuv.io/api/json
+  - type: JSONSchema
+    url: json-schema/openuv-uv-index-schema.json
+  - type: JSONSchema
+    url: json-schema/openuv-uv-forecast-schema.json
+  - type: JSONSchema
+    url: json-schema/openuv-protection-window-schema.json
+  - type: JSONStructure
+    url: json-structure/openuv-uv-index-structure.json
+  - type: JSONStructure
+    url: json-structure/openuv-uv-forecast-structure.json
+  - type: JSONStructure
+    url: json-structure/openuv-protection-window-structure.json
+  - type: JSONLD
+    url: json-ld/openuv-context.jsonld
+  - type: Examples
+    url: examples/openuv-uv-index-example.json
+  - type: Examples
+    url: examples/openuv-uv-forecast-example.json
+  - type: Examples
+    url: examples/openuv-protection-window-example.json
+  - type: Examples
+    url: examples/openuv-api-statistics-example.json
+  - type: Examples
+    url: examples/openuv-api-status-example.json
+  - type: JSONSchema
+    url: json-schema/openuv-api-statistics-schema.json
+  - type: Authentication
+    url: https://www.openuv.io/console
+  - type: RateLimits
+    url: rate-limits/openuv-rate-limits.yml
+  - type: Plans
+    url: plans/openuv-plans-pricing.yml
+  - type: FinOps
+    url: finops/openuv-finops.yml
+- aid: openuv:openuv-uv-index-api
+  name: OpenUV UV Index API
+  description: Current and forecasted UV index data
+  humanURL: https://www.openuv.io
+  baseURL: https://api.openuv.io/api/v1
+  tags:
+  - UV Index
+  properties:
+  - type: OpenAPI
+    url: openapi/openuv-uv-index-api-openapi.yml
+  - type: Documentation
+    url: https://www.openuv.io
+  - type: APIReference
+    url: https://www.openuv.io/api/json
+  - type: JSONSchema
+    url: json-schema/openuv-uv-index-schema.json
+  - type: JSONSchema
+    url: json-schema/openuv-uv-forecast-schema.json
+  - type: JSONSchema
+    url: json-schema/openuv-protection-window-schema.json
+  - type: JSONStructure
+    url: json-structure/openuv-uv-index-structure.json
+  - type: JSONStructure
+    url: json-structure/openuv-uv-forecast-structure.json
+  - type: JSONStructure
+    url: json-structure/openuv-protection-window-structure.json
+  - type: JSONLD
+    url: json-ld/openuv-context.jsonld
+  - type: Examples
+    url: examples/openuv-uv-index-example.json
+  - type: Examples
+    url: examples/openuv-uv-forecast-example.json
+  - type: Examples
+    url: examples/openuv-protection-window-example.json
+  - type: Examples
+    url: examples/openuv-api-statistics-example.json
+  - type: Examples
+    url: examples/openuv-api-status-example.json
+  - type: JSONSchema
+    url: json-schema/openuv-api-statistics-schema.json
+  - type: Authentication
+    url: https://www.openuv.io/console
+  - type: RateLimits
+    url: rate-limits/openuv-rate-limits.yml
+  - type: Plans
+    url: plans/openuv-plans-pricing.yml
+  - type: FinOps
+    url: finops/openuv-finops.yml
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/openuv/overview
   - type: AgenticAccess
     url: agentic-access/openuv-agentic-access.yml
   - type: DomainSecurity
