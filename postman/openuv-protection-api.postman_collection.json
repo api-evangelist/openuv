@@ -1,0 +1,383 @@
+{
+  "info": {
+    "_postman_id": "dc262138-d5ee-497a-be9a-a41276ddd2b2",
+    "name": "OpenUV Account Protection API",
+    "description": "Global real-time UV index API. Returns current UV index, daily maximum UV, ozone level,\nsafe sun-exposure times per Fitzpatrick skin type, sun position, and a recommended sun\nprotection window for any geographic coordinate. All endpoints are GET-only and require\nan OpenUV API key supplied in the `x-access-token` header.\n\n\nContact Support:\n Name: OpenUV Support\n Email: support@openuv.io",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:26:49.000Z",
+    "updatedAt": "2026-07-28T02:26:49.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-dc262138-d5ee-497a-be9a-a41276ddd2b2"
+  },
+  "item": [
+    {
+      "name": "protection",
+      "item": [
+        {
+          "name": "Get Sun Protection Window",
+          "id": "7282ea78-feca-4e86-8893-847728f766ea",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/protection?lat=<float>&lng=<float>&alt=<float>&from=3.5&to=3.5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "protection"
+              ],
+              "query": [
+                {
+                  "description": "(Required) Latitude in decimal degrees (-90 to 90).",
+                  "key": "lat",
+                  "value": "<float>"
+                },
+                {
+                  "description": "(Required) Longitude in decimal degrees (-180 to 180).",
+                  "key": "lng",
+                  "value": "<float>"
+                },
+                {
+                  "description": "Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.",
+                  "key": "alt",
+                  "value": "<float>"
+                },
+                {
+                  "description": "Lower UV index bound for the protection window. Defaults to 3.5.",
+                  "key": "from",
+                  "value": "3.5"
+                },
+                {
+                  "description": "Upper UV index bound for the protection window. Defaults to 3.5.",
+                  "key": "to",
+                  "value": "3.5"
+                }
+              ]
+            },
+            "description": "Returns the start and end times of the recommended sun-protection window for\nthe day, defined as the period when UV index crosses the configurable `from`\nand `to` thresholds (default 3.5).\n"
+          },
+          "response": [
+            {
+              "id": "07c051f7-6c54-41a8-8e1d-911b8f8e115b",
+              "name": "Protection window for the day",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/protection?lat=<float>&lng=<float>&alt=<float>&from=3.5&to=3.5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "protection"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Latitude in decimal degrees (-90 to 90).",
+                      "key": "lat",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "(Required) Longitude in decimal degrees (-180 to 180).",
+                      "key": "lng",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.",
+                      "key": "alt",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "Lower UV index bound for the protection window. Defaults to 3.5.",
+                      "key": "from",
+                      "value": "3.5"
+                    },
+                    {
+                      "description": "Upper UV index bound for the protection window. Defaults to 3.5.",
+                      "key": "to",
+                      "value": "3.5"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"result\": {\n    \"from_time\": \"<dateTime>\",\n    \"from_uv\": \"<float>\",\n    \"to_time\": \"<dateTime>\",\n    \"to_uv\": \"<float>\"\n  }\n}",
+              "createdAt": "2026-07-28T02:26:49.000Z",
+              "updatedAt": "2026-07-28T02:26:49.000Z",
+              "uid": "35240-07c051f7-6c54-41a8-8e1d-911b8f8e115b"
+            },
+            {
+              "id": "06bd922b-9eed-4694-979e-78c1bc50b0f3",
+              "name": "Invalid parameters.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/protection?lat=<float>&lng=<float>&alt=<float>&from=3.5&to=3.5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "protection"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Latitude in decimal degrees (-90 to 90).",
+                      "key": "lat",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "(Required) Longitude in decimal degrees (-180 to 180).",
+                      "key": "lng",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.",
+                      "key": "alt",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "Lower UV index bound for the protection window. Defaults to 3.5.",
+                      "key": "from",
+                      "value": "3.5"
+                    },
+                    {
+                      "description": "Upper UV index bound for the protection window. Defaults to 3.5.",
+                      "key": "to",
+                      "value": "3.5"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:26:49.000Z",
+              "updatedAt": "2026-07-28T02:26:49.000Z",
+              "uid": "35240-06bd922b-9eed-4694-979e-78c1bc50b0f3"
+            },
+            {
+              "id": "f2e091c1-1aca-4e7d-8411-6540cdf8a857",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/protection?lat=<float>&lng=<float>&alt=<float>&from=3.5&to=3.5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "protection"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Latitude in decimal degrees (-90 to 90).",
+                      "key": "lat",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "(Required) Longitude in decimal degrees (-180 to 180).",
+                      "key": "lng",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.",
+                      "key": "alt",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "Lower UV index bound for the protection window. Defaults to 3.5.",
+                      "key": "from",
+                      "value": "3.5"
+                    },
+                    {
+                      "description": "Upper UV index bound for the protection window. Defaults to 3.5.",
+                      "key": "to",
+                      "value": "3.5"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:26:49.000Z",
+              "updatedAt": "2026-07-28T02:26:49.000Z",
+              "uid": "35240-f2e091c1-1aca-4e7d-8411-6540cdf8a857"
+            },
+            {
+              "id": "9c6fac08-983f-4f32-997f-13c4c61fc9bf",
+              "name": "Daily quota exceeded.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/protection?lat=<float>&lng=<float>&alt=<float>&from=3.5&to=3.5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "protection"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Latitude in decimal degrees (-90 to 90).",
+                      "key": "lat",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "(Required) Longitude in decimal degrees (-180 to 180).",
+                      "key": "lng",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.",
+                      "key": "alt",
+                      "value": "<float>"
+                    },
+                    {
+                      "description": "Lower UV index bound for the protection window. Defaults to 3.5.",
+                      "key": "from",
+                      "value": "3.5"
+                    },
+                    {
+                      "description": "Upper UV index bound for the protection window. Defaults to 3.5.",
+                      "key": "to",
+                      "value": "3.5"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:26:49.000Z",
+              "updatedAt": "2026-07-28T02:26:49.000Z",
+              "uid": "35240-9c6fac08-983f-4f32-997f-13c4c61fc9bf"
+            }
+          ],
+          "createdAt": "2026-07-28T02:26:49.000Z",
+          "updatedAt": "2026-07-28T02:26:49.000Z",
+          "uid": "35240-7282ea78-feca-4e86-8893-847728f766ea"
+        }
+      ],
+      "id": "83710298-410e-4a1c-bc00-222a2da2fd35",
+      "createdAt": "2026-07-28T02:26:49.000Z",
+      "updatedAt": "2026-07-28T02:26:49.000Z",
+      "uid": "35240-83710298-410e-4a1c-bc00-222a2da2fd35"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-access-token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.openuv.io/api/v1"
+    }
+  ]
+}

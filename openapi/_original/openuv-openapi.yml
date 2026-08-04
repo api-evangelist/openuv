@@ -1,0 +1,475 @@
+openapi: 3.1.0
+info:
+  title: OpenUV API
+  description: |
+    Global real-time UV index API. Returns current UV index, daily maximum UV, ozone level,
+    safe sun-exposure times per Fitzpatrick skin type, sun position, and a recommended sun
+    protection window for any geographic coordinate. All endpoints are GET-only and require
+    an OpenUV API key supplied in the `x-access-token` header.
+  version: '1.0.0'
+  contact:
+    name: OpenUV Support
+    url: https://www.openuv.io
+    email: support@openuv.io
+  license:
+    name: Proprietary
+    url: https://www.openuv.io
+servers:
+  - url: https://api.openuv.io/api/v1
+    description: OpenUV Production
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: UV Index
+    description: Current and forecasted UV index data
+  - name: Protection
+    description: Sun protection window recommendations
+  - name: Account
+    description: API status and per-key usage statistics
+paths:
+  /uv:
+    get:
+      tags:
+        - UV Index
+      operationId: getCurrentUVIndex
+      summary: Get Current UV Index
+      description: |
+        Returns the current UV index, daily maximum UV, ozone level, sun position
+        and Fitzpatrick skin-type-specific safe exposure times for the given coordinate.
+      parameters:
+        - $ref: '#/components/parameters/Latitude'
+        - $ref: '#/components/parameters/Longitude'
+        - $ref: '#/components/parameters/Altitude'
+        - $ref: '#/components/parameters/DateTime'
+      responses:
+        '200':
+          description: Current UV index reading
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UVIndexResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /forecast:
+    get:
+      tags:
+        - UV Index
+      operationId: getUVForecast
+      summary: Get UV Index Forecast
+      description: |
+        Returns a time-series UV index forecast for the given coordinate. Each entry
+        contains the UV value, ISO 8601 timestamp and sun position at the forecast step.
+      parameters:
+        - $ref: '#/components/parameters/Latitude'
+        - $ref: '#/components/parameters/Longitude'
+        - $ref: '#/components/parameters/Altitude'
+        - $ref: '#/components/parameters/DateTime'
+      responses:
+        '200':
+          description: Forecasted UV index series
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UVForecastResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /protection:
+    get:
+      tags:
+        - Protection
+      operationId: getProtectionWindow
+      summary: Get Sun Protection Window
+      description: |
+        Returns the start and end times of the recommended sun-protection window for
+        the day, defined as the period when UV index crosses the configurable `from`
+        and `to` thresholds (default 3.5).
+      parameters:
+        - $ref: '#/components/parameters/Latitude'
+        - $ref: '#/components/parameters/Longitude'
+        - $ref: '#/components/parameters/Altitude'
+        - name: from
+          in: query
+          required: false
+          description: Lower UV index bound for the protection window. Defaults to 3.5.
+          schema:
+            type: number
+            format: float
+            default: 3.5
+            minimum: 0
+            maximum: 20
+        - name: to
+          in: query
+          required: false
+          description: Upper UV index bound for the protection window. Defaults to 3.5.
+          schema:
+            type: number
+            format: float
+            default: 3.5
+            minimum: 0
+            maximum: 20
+      responses:
+        '200':
+          description: Protection window for the day
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProtectionWindowResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /status:
+    get:
+      tags:
+        - Account
+      operationId: getApiStatus
+      summary: Get API Status
+      description: |
+        Lightweight health check that returns whether the OpenUV API is currently
+        available. Recommended before making metered requests on slow networks.
+      security: []
+      responses:
+        '200':
+          description: API availability
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+  /stat:
+    get:
+      tags:
+        - Account
+      operationId: getApiStatistics
+      summary: Get API Usage Statistics
+      description: |
+        Returns per-key request volumes and accrued cost for today, yesterday,
+        the current month, and the previous month.
+      responses:
+        '200':
+          description: Usage statistics for the authenticated key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsResponse'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-access-token
+      description: OpenUV API key issued from https://www.openuv.io/console
+  parameters:
+    Latitude:
+      name: lat
+      in: query
+      required: true
+      description: Latitude in decimal degrees (-90 to 90).
+      schema:
+        type: number
+        format: float
+        minimum: -90
+        maximum: 90
+        example: 39.7392
+    Longitude:
+      name: lng
+      in: query
+      required: true
+      description: Longitude in decimal degrees (-180 to 180).
+      schema:
+        type: number
+        format: float
+        minimum: -180
+        maximum: 180
+        example: -104.9903
+    Altitude:
+      name: alt
+      in: query
+      required: false
+      description: Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.
+      schema:
+        type: number
+        format: float
+        minimum: 0
+        example: 1609
+    DateTime:
+      name: dt
+      in: query
+      required: false
+      description: ISO 8601 timestamp for the requested UV reading or forecast anchor. Defaults to the current time.
+      schema:
+        type: string
+        format: date-time
+        example: '2026-05-29T18:00:00.000Z'
+  schemas:
+    UVIndexResponse:
+      type: object
+      required: [result]
+      properties:
+        result:
+          $ref: '#/components/schemas/UVIndex'
+    UVIndex:
+      type: object
+      required: [uv, uv_time, uv_max, uv_max_time, ozone, ozone_time, safe_exposure_time, sun_info]
+      properties:
+        uv:
+          type: number
+          format: float
+          description: Current UV index at the requested time and coordinate.
+          example: 8.2342
+        uv_time:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of the UV reading.
+        uv_max:
+          type: number
+          format: float
+          description: Maximum UV index for the day at solar noon.
+          example: 10.3335
+        uv_max_time:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of the daily maximum UV (solar noon).
+        ozone:
+          type: number
+          format: float
+          description: Total column ozone in Dobson units (DU).
+          example: 300.7
+        ozone_time:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of the ozone reading.
+        safe_exposure_time:
+          $ref: '#/components/schemas/SafeExposureTime'
+        sun_info:
+          $ref: '#/components/schemas/SunInfo'
+    SafeExposureTime:
+      type: object
+      description: Minutes of safe unprotected sun exposure by Fitzpatrick skin type (st1 = lightest, st6 = darkest). Null when not applicable (e.g. night).
+      properties:
+        st1:
+          type: integer
+          nullable: true
+          description: Skin Type 1 - Pale white skin, always burns.
+        st2:
+          type: integer
+          nullable: true
+          description: Skin Type 2 - White skin, usually burns.
+        st3:
+          type: integer
+          nullable: true
+          description: Skin Type 3 - Light brown skin, sometimes burns.
+        st4:
+          type: integer
+          nullable: true
+          description: Skin Type 4 - Moderate brown skin, rarely burns.
+        st5:
+          type: integer
+          nullable: true
+          description: Skin Type 5 - Dark brown skin, very rarely burns.
+        st6:
+          type: integer
+          nullable: true
+          description: Skin Type 6 - Deeply pigmented dark brown skin, never burns.
+    SunInfo:
+      type: object
+      properties:
+        sun_times:
+          $ref: '#/components/schemas/SunTimes'
+        sun_position:
+          $ref: '#/components/schemas/SunPosition'
+    SunTimes:
+      type: object
+      description: Solar event times for the day at the requested coordinate.
+      properties:
+        solarNoon:
+          type: string
+          format: date-time
+        nadir:
+          type: string
+          format: date-time
+        sunrise:
+          type: string
+          format: date-time
+        sunset:
+          type: string
+          format: date-time
+        sunriseEnd:
+          type: string
+          format: date-time
+        sunsetStart:
+          type: string
+          format: date-time
+        dawn:
+          type: string
+          format: date-time
+        dusk:
+          type: string
+          format: date-time
+        nauticalDawn:
+          type: string
+          format: date-time
+        nauticalDusk:
+          type: string
+          format: date-time
+        nightEnd:
+          type: string
+          format: date-time
+        night:
+          type: string
+          format: date-time
+        goldenHourEnd:
+          type: string
+          format: date-time
+        goldenHour:
+          type: string
+          format: date-time
+    SunPosition:
+      type: object
+      description: Position of the sun at the requested time and coordinate, in radians.
+      properties:
+        azimuth:
+          type: number
+          format: float
+          description: Solar azimuth in radians from south, clockwise.
+        altitude:
+          type: number
+          format: float
+          description: Solar altitude in radians above the horizon.
+    UVForecastResponse:
+      type: object
+      required: [result]
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/UVForecastEntry'
+    UVForecastEntry:
+      type: object
+      required: [uv, uv_time, sun_position]
+      properties:
+        uv:
+          type: number
+          format: float
+          description: Forecasted UV index at the step.
+        uv_time:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp for the forecast step.
+        sun_position:
+          $ref: '#/components/schemas/SunPosition'
+    ProtectionWindowResponse:
+      type: object
+      required: [result]
+      properties:
+        result:
+          $ref: '#/components/schemas/ProtectionWindow'
+    ProtectionWindow:
+      type: object
+      description: Start/end of the recommended sun-protection window for the day.
+      properties:
+        from_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: ISO 8601 timestamp when UV index crosses the `from` threshold.
+        from_uv:
+          type: number
+          format: float
+          nullable: true
+          description: UV index at the protection window start.
+        to_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: ISO 8601 timestamp when UV index drops below the `to` threshold.
+        to_uv:
+          type: number
+          format: float
+          nullable: true
+          description: UV index at the protection window end.
+    StatusResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: boolean
+          description: True when the OpenUV API is available.
+    StatisticsResponse:
+      type: object
+      required: [result]
+      properties:
+        result:
+          $ref: '#/components/schemas/Statistics'
+    Statistics:
+      type: object
+      properties:
+        requests_today:
+          type: integer
+          description: Number of API requests made today.
+        requests_yesterday:
+          type: integer
+          description: Number of API requests made yesterday.
+        requests_month:
+          type: integer
+          description: Number of API requests this month.
+        requests_last_month:
+          type: integer
+          description: Number of API requests last month.
+        cost_today:
+          type: number
+          format: float
+          description: USD cost accrued today.
+        cost_yesterday:
+          type: number
+          format: float
+          description: USD cost accrued yesterday.
+        cost_month:
+          type: number
+          format: float
+          description: USD cost accrued this month.
+        cost_last_month:
+          type: number
+          format: float
+          description: USD cost accrued last month.
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
+  responses:
+    BadRequest:
+      description: Invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "User with API Key not found"
+    TooManyRequests:
+      description: Daily quota exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Daily API quota exceeded. Add billing details to get 15000 reqs/day or contact support@openuv.io to upgrade to Unlimited Plan."

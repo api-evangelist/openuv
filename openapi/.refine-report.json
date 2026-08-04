@@ -1,0 +1,18 @@
+{
+  "provider": "openuv",
+  "sources": [
+    "openuv-account-api-openapi.yml",
+    "openuv-protection-api-openapi.yml",
+    "openuv-uv-index-api-openapi.yml"
+  ],
+  "outputs": [
+    "openuv-account-api-openapi.yml",
+    "openuv-protection-api-openapi.yml",
+    "openuv-uv-index-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
