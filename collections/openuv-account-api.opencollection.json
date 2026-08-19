@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OpenUV Account API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-access-token",
+      "value": "{{x-access-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get API Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openuv.io/api/v1/status"
+          },
+          "docs": "Lightweight health check that returns whether the OpenUV API is currently\navailable. Recommended before making metered requests on slow networks.\n"
+        },
+        {
+          "info": {
+            "name": "Get API Usage Statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openuv.io/api/v1/stat"
+          },
+          "docs": "Returns per-key request volumes and accrued cost for today, yesterday,\nthe current month, and the previous month.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

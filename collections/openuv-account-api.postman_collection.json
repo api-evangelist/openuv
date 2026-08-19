@@ -1,0 +1,248 @@
+{
+  "item": [
+    {
+      "id": "defc9148-52fd-4f69-a103-4dd49978330a",
+      "name": "Account",
+      "description": {
+        "content": "API status and per-key usage statistics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b45991e2-3b79-41f2-abf5-a8576afbb71b",
+          "name": "Get API Status",
+          "request": {
+            "name": "Get API Status",
+            "description": {
+              "content": "Lightweight health check that returns whether the OpenUV API is currently\navailable. Recommended before making metered requests on slow networks.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5e4e5ef-154e-4a23-8a45-3b3069f44157",
+              "name": "API availability",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c4a25f4-80e1-427a-ac65-931420490c69",
+          "name": "Get API Usage Statistics",
+          "request": {
+            "name": "Get API Usage Statistics",
+            "description": {
+              "content": "Returns per-key request volumes and accrued cost for today, yesterday,\nthe current month, and the previous month.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c2c5a217-c254-4221-b555-dd19d6907c4a",
+              "name": "Usage statistics for the authenticated key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": {\n    \"requests_today\": 296,\n    \"requests_yesterday\": 6617,\n    \"requests_month\": 2298,\n    \"requests_last_month\": 7549,\n    \"cost_today\": 1562.9104777092973,\n    \"cost_yesterday\": 6238.665453097909,\n    \"cost_month\": 9119.869447998191,\n    \"cost_last_month\": 7188.277815453066\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0cd4d016-a75b-428f-b2aa-d3bcdd734b5e",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-access-token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"User with API Key not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openuv.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-access-token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e8f59f4a-33bf-4ec0-b119-4487ff5d58e4",
+    "name": "OpenUV Account API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Global real-time UV index API. Returns current UV index, daily maximum UV, ozone level,\nsafe sun-exposure times per Fitzpatrick skin type, sun position, and a recommended sun\nprotection window for any geographic coordinate. All endpoints are GET-only and require\nan OpenUV API key supplied in the `x-access-token` header.\n\n\nContact Support:\n Name: OpenUV Support\n Email: support@openuv.io",
+      "type": "text/plain"
+    }
+  }
+}

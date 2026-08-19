@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OpenUV Account UV Index API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-access-token",
+      "value": "{{x-access-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "UV Index",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Current UV Index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openuv.io/api/v1/uv",
+            "params": [
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees (-90 to 90)."
+              },
+              {
+                "name": "lng",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees (-180 to 180)."
+              },
+              {
+                "name": "alt",
+                "value": "",
+                "type": "query",
+                "description": "Altitude in meters above sea level. Improves UV accuracy for high-elevation locations."
+              },
+              {
+                "name": "dt",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 timestamp for the requested UV reading or forecast anchor. Defaults to the current time."
+              }
+            ]
+          },
+          "docs": "Returns the current UV index, daily maximum UV, ozone level, sun position\nand Fitzpatrick skin-type-specific safe exposure times for the given coordinate.\n"
+        },
+        {
+          "info": {
+            "name": "Get UV Index Forecast",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openuv.io/api/v1/forecast",
+            "params": [
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees (-90 to 90)."
+              },
+              {
+                "name": "lng",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees (-180 to 180)."
+              },
+              {
+                "name": "alt",
+                "value": "",
+                "type": "query",
+                "description": "Altitude in meters above sea level. Improves UV accuracy for high-elevation locations."
+              },
+              {
+                "name": "dt",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 timestamp for the requested UV reading or forecast anchor. Defaults to the current time."
+              }
+            ]
+          },
+          "docs": "Returns a time-series UV index forecast for the given coordinate. Each entry\ncontains the UV value, ISO 8601 timestamp and sun position at the forecast step.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OpenUV Account Protection API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-access-token",
+      "value": "{{x-access-token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Protection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Sun Protection Window",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openuv.io/api/v1/protection",
+            "params": [
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude in decimal degrees (-90 to 90)."
+              },
+              {
+                "name": "lng",
+                "value": "",
+                "type": "query",
+                "description": "Longitude in decimal degrees (-180 to 180)."
+              },
+              {
+                "name": "alt",
+                "value": "",
+                "type": "query",
+                "description": "Altitude in meters above sea level. Improves UV accuracy for high-elevation locations."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Lower UV index bound for the protection window. Defaults to 3.5."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "Upper UV index bound for the protection window. Defaults to 3.5."
+              }
+            ]
+          },
+          "docs": "Returns the start and end times of the recommended sun-protection window for\nthe day, defined as the period when UV index crosses the configurable `from`\nand `to` thresholds (default 3.5).\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
