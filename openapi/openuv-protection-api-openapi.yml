@@ -82,14 +82,6 @@ components:
       properties:
         result:
           $ref: '#/components/schemas/ProtectionWindow'
-    Error:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Human-readable error message.
     ProtectionWindow:
       type: object
       description: Start/end of the recommended sun-protection window for the day.
@@ -114,30 +106,26 @@ components:
           format: float
           nullable: true
           description: UV index at the protection window end.
-  responses:
-    TooManyRequests:
-      description: Daily quota exceeded.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Daily API quota exceeded. Add billing details to get 15000 reqs/day or contact support@openuv.io to upgrade to Unlimited Plan.
-    Forbidden:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: User with API Key not found
-    BadRequest:
-      description: Invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
   parameters:
+    Latitude:
+      name: lat
+      in: query
+      required: true
+      description: Latitude in decimal degrees (-90 to 90).
+      schema:
+        type: number
+        format: float
+        minimum: -90
+        maximum: 90
+        example: 39.7392
     Altitude:
       name: alt
       in: query
@@ -159,17 +147,29 @@ components:
         minimum: -180
         maximum: 180
         example: -104.9903
-    Latitude:
-      name: lat
-      in: query
-      required: true
-      description: Latitude in decimal degrees (-90 to 90).
-      schema:
-        type: number
-        format: float
-        minimum: -90
-        maximum: 90
-        example: 39.7392
+  responses:
+    BadRequest:
+      description: Invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Daily quota exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Daily API quota exceeded. Add billing details to get 15000 reqs/day or contact support@openuv.io to upgrade to Unlimited Plan.
+    Forbidden:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: User with API Key not found
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
