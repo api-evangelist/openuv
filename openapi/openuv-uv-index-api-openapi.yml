@@ -80,14 +80,72 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  parameters:
+    Altitude:
+      name: alt
+      in: query
+      required: false
+      description: Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.
+      schema:
+        type: number
+        format: float
+        minimum: 0
+        example: 1609
+    DateTime:
+      name: dt
+      in: query
+      required: false
+      description: ISO 8601 timestamp for the requested UV reading or forecast anchor. Defaults to the current time.
+      schema:
+        type: string
+        format: date-time
+        example: '2026-05-29T18:00:00.000Z'
+    Latitude:
+      name: lat
+      in: query
+      required: true
+      description: Latitude in decimal degrees (-90 to 90).
+      schema:
+        type: number
+        format: float
+        minimum: -90
+        maximum: 90
+        example: 39.7392
+    Longitude:
+      name: lng
+      in: query
+      required: true
+      description: Longitude in decimal degrees (-180 to 180).
+      schema:
+        type: number
+        format: float
+        minimum: -180
+        maximum: 180
+        example: -104.9903
+  responses:
+    BadRequest:
+      description: Invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Daily quota exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Daily API quota exceeded. Add billing details to get 15000 reqs/day or contact support@openuv.io to upgrade to Unlimited Plan.
+    Forbidden:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: User with API Key not found
   schemas:
-    UVIndexResponse:
-      type: object
-      required:
-      - result
-      properties:
-        result:
-          $ref: '#/components/schemas/UVIndex'
     SafeExposureTime:
       type: object
       description: Minutes of safe unprotected sun exposure by Fitzpatrick skin type (st1 = lightest, st6 = darkest). Null when not applicable (e.g. night).
@@ -116,49 +174,15 @@ components:
           type: integer
           nullable: true
           description: Skin Type 6 - Deeply pigmented dark brown skin, never burns.
-    UVIndex:
+    UVForecastResponse:
       type: object
       required:
-      - uv
-      - uv_time
-      - uv_max
-      - uv_max_time
-      - ozone
-      - ozone_time
-      - safe_exposure_time
-      - sun_info
+      - result
       properties:
-        uv:
-          type: number
-          format: float
-          description: Current UV index at the requested time and coordinate.
-          example: 8.2342
-        uv_time:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp of the UV reading.
-        uv_max:
-          type: number
-          format: float
-          description: Maximum UV index for the day at solar noon.
-          example: 10.3335
-        uv_max_time:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp of the daily maximum UV (solar noon).
-        ozone:
-          type: number
-          format: float
-          description: Total column ozone in Dobson units (DU).
-          example: 300.7
-        ozone_time:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp of the ozone reading.
-        safe_exposure_time:
-          $ref: '#/components/schemas/SafeExposureTime'
-        sun_info:
-          $ref: '#/components/schemas/SunInfo'
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/UVForecastEntry'
     SunPosition:
       type: object
       description: Position of the sun at the requested time and coordinate, in radians.
@@ -171,6 +195,21 @@ components:
           type: number
           format: float
           description: Solar altitude in radians above the horizon.
+    Error:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
+    SunInfo:
+      type: object
+      properties:
+        sun_times:
+          $ref: '#/components/schemas/SunTimes'
+        sun_position:
+          $ref: '#/components/schemas/SunPosition'
     SunTimes:
       type: object
       description: Solar event times for the day at the requested coordinate.
@@ -217,30 +256,6 @@ components:
         goldenHour:
           type: string
           format: date-time
-    SunInfo:
-      type: object
-      properties:
-        sun_times:
-          $ref: '#/components/schemas/SunTimes'
-        sun_position:
-          $ref: '#/components/schemas/SunPosition'
-    Error:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Human-readable error message.
-    UVForecastResponse:
-      type: object
-      required:
-      - result
-      properties:
-        result:
-          type: array
-          items:
-            $ref: '#/components/schemas/UVForecastEntry'
     UVForecastEntry:
       type: object
       required:
@@ -258,71 +273,56 @@ components:
           description: ISO 8601 timestamp for the forecast step.
         sun_position:
           $ref: '#/components/schemas/SunPosition'
-  parameters:
-    Latitude:
-      name: lat
-      in: query
-      required: true
-      description: Latitude in decimal degrees (-90 to 90).
-      schema:
-        type: number
-        format: float
-        minimum: -90
-        maximum: 90
-        example: 39.7392
-    Altitude:
-      name: alt
-      in: query
-      required: false
-      description: Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.
-      schema:
-        type: number
-        format: float
-        minimum: 0
-        example: 1609
-    Longitude:
-      name: lng
-      in: query
-      required: true
-      description: Longitude in decimal degrees (-180 to 180).
-      schema:
-        type: number
-        format: float
-        minimum: -180
-        maximum: 180
-        example: -104.9903
-    DateTime:
-      name: dt
-      in: query
-      required: false
-      description: ISO 8601 timestamp for the requested UV reading or forecast anchor. Defaults to the current time.
-      schema:
-        type: string
-        format: date-time
-        example: '2026-05-29T18:00:00.000Z'
-  responses:
-    BadRequest:
-      description: Invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: User with API Key not found
-    TooManyRequests:
-      description: Daily quota exceeded.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Daily API quota exceeded. Add billing details to get 15000 reqs/day or contact support@openuv.io to upgrade to Unlimited Plan.
+    UVIndexResponse:
+      type: object
+      required:
+      - result
+      properties:
+        result:
+          $ref: '#/components/schemas/UVIndex'
+    UVIndex:
+      type: object
+      required:
+      - uv
+      - uv_time
+      - uv_max
+      - uv_max_time
+      - ozone
+      - ozone_time
+      - safe_exposure_time
+      - sun_info
+      properties:
+        uv:
+          type: number
+          format: float
+          description: Current UV index at the requested time and coordinate.
+          example: 8.2342
+        uv_time:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of the UV reading.
+        uv_max:
+          type: number
+          format: float
+          description: Maximum UV index for the day at solar noon.
+          example: 10.3335
+        uv_max_time:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of the daily maximum UV (solar noon).
+        ozone:
+          type: number
+          format: float
+          description: Total column ozone in Dobson units (DU).
+          example: 300.7
+        ozone_time:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of the ozone reading.
+        safe_exposure_time:
+          $ref: '#/components/schemas/SafeExposureTime'
+        sun_info:
+          $ref: '#/components/schemas/SunInfo'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

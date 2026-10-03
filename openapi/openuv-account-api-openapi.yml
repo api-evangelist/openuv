@@ -70,6 +70,14 @@ components:
         status:
           type: boolean
           description: True when the OpenUV API is available.
+    Error:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
     Statistics:
       type: object
       properties:
@@ -108,14 +116,6 @@ components:
       properties:
         result:
           $ref: '#/components/schemas/Statistics'
-    Error:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Human-readable error message.
   responses:
     Forbidden:
       description: Missing or invalid API key.

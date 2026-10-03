@@ -115,6 +115,16 @@ components:
           type: string
           description: Human-readable error message.
   parameters:
+    Altitude:
+      name: alt
+      in: query
+      required: false
+      description: Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.
+      schema:
+        type: number
+        format: float
+        minimum: 0
+        example: 1609
     Latitude:
       name: lat
       in: query
@@ -126,16 +136,6 @@ components:
         minimum: -90
         maximum: 90
         example: 39.7392
-    Altitude:
-      name: alt
-      in: query
-      required: false
-      description: Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.
-      schema:
-        type: number
-        format: float
-        minimum: 0
-        example: 1609
     Longitude:
       name: lng
       in: query
