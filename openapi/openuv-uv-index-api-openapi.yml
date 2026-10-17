@@ -81,18 +81,34 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    SunPosition:
+    SafeExposureTime:
       type: object
-      description: Position of the sun at the requested time and coordinate, in radians.
+      description: Minutes of safe unprotected sun exposure by Fitzpatrick skin type (st1 = lightest, st6 = darkest). Null when not applicable (e.g. night).
       properties:
-        azimuth:
-          type: number
-          format: float
-          description: Solar azimuth in radians from south, clockwise.
-        altitude:
-          type: number
-          format: float
-          description: Solar altitude in radians above the horizon.
+        st1:
+          type: integer
+          nullable: true
+          description: Skin Type 1 - Pale white skin, always burns.
+        st2:
+          type: integer
+          nullable: true
+          description: Skin Type 2 - White skin, usually burns.
+        st3:
+          type: integer
+          nullable: true
+          description: Skin Type 3 - Light brown skin, sometimes burns.
+        st4:
+          type: integer
+          nullable: true
+          description: Skin Type 4 - Moderate brown skin, rarely burns.
+        st5:
+          type: integer
+          nullable: true
+          description: Skin Type 5 - Dark brown skin, very rarely burns.
+        st6:
+          type: integer
+          nullable: true
+          description: Skin Type 6 - Deeply pigmented dark brown skin, never burns.
     UVIndex:
       type: object
       required:
@@ -136,14 +152,18 @@ components:
           $ref: '#/components/schemas/SafeExposureTime'
         sun_info:
           $ref: '#/components/schemas/SunInfo'
-    Error:
+    SunPosition:
       type: object
-      required:
-      - error
+      description: Position of the sun at the requested time and coordinate, in radians.
       properties:
-        error:
-          type: string
-          description: Human-readable error message.
+        azimuth:
+          type: number
+          format: float
+          description: Solar azimuth in radians from south, clockwise.
+        altitude:
+          type: number
+          format: float
+          description: Solar altitude in radians above the horizon.
     UVForecastResponse:
       type: object
       required:
@@ -153,6 +173,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UVForecastEntry'
+    SunInfo:
+      type: object
+      properties:
+        sun_times:
+          $ref: '#/components/schemas/SunTimes'
+        sun_position:
+          $ref: '#/components/schemas/SunPosition'
     UVForecastEntry:
       type: object
       required:
@@ -170,6 +197,21 @@ components:
           description: ISO 8601 timestamp for the forecast step.
         sun_position:
           $ref: '#/components/schemas/SunPosition'
+    Error:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
+    UVIndexResponse:
+      type: object
+      required:
+      - result
+      properties:
+        result:
+          $ref: '#/components/schemas/UVIndex'
     SunTimes:
       type: object
       description: Solar event times for the day at the requested coordinate.
@@ -216,48 +258,6 @@ components:
         goldenHour:
           type: string
           format: date-time
-    SafeExposureTime:
-      type: object
-      description: Minutes of safe unprotected sun exposure by Fitzpatrick skin type (st1 = lightest, st6 = darkest). Null when not applicable (e.g. night).
-      properties:
-        st1:
-          type: integer
-          nullable: true
-          description: Skin Type 1 - Pale white skin, always burns.
-        st2:
-          type: integer
-          nullable: true
-          description: Skin Type 2 - White skin, usually burns.
-        st3:
-          type: integer
-          nullable: true
-          description: Skin Type 3 - Light brown skin, sometimes burns.
-        st4:
-          type: integer
-          nullable: true
-          description: Skin Type 4 - Moderate brown skin, rarely burns.
-        st5:
-          type: integer
-          nullable: true
-          description: Skin Type 5 - Dark brown skin, very rarely burns.
-        st6:
-          type: integer
-          nullable: true
-          description: Skin Type 6 - Deeply pigmented dark brown skin, never burns.
-    SunInfo:
-      type: object
-      properties:
-        sun_times:
-          $ref: '#/components/schemas/SunTimes'
-        sun_position:
-          $ref: '#/components/schemas/SunPosition'
-    UVIndexResponse:
-      type: object
-      required:
-      - result
-      properties:
-        result:
-          $ref: '#/components/schemas/UVIndex'
   parameters:
     Latitude:
       name: lat
@@ -270,16 +270,6 @@ components:
         minimum: -90
         maximum: 90
         example: 39.7392
-    Altitude:
-      name: alt
-      in: query
-      required: false
-      description: Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.
-      schema:
-        type: number
-        format: float
-        minimum: 0
-        example: 1609
     DateTime:
       name: dt
       in: query
@@ -300,7 +290,23 @@ components:
         minimum: -180
         maximum: 180
         example: -104.9903
+    Altitude:
+      name: alt
+      in: query
+      required: false
+      description: Altitude in meters above sea level. Improves UV accuracy for high-elevation locations.
+      schema:
+        type: number
+        format: float
+        minimum: 0
+        example: 1609
   responses:
+    BadRequest:
+      description: Invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Daily quota exceeded.
       content:
@@ -309,12 +315,6 @@ components:
             $ref: '#/components/schemas/Error'
           example:
             error: Daily API quota exceeded. Add billing details to get 15000 reqs/day or contact support@openuv.io to upgrade to Unlimited Plan.
-    BadRequest:
-      description: Invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Forbidden:
       description: Missing or invalid API key.
       content:

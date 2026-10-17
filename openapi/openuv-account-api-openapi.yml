@@ -62,29 +62,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   schemas:
-    Error:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Human-readable error message.
-    StatisticsResponse:
-      type: object
-      required:
-      - result
-      properties:
-        result:
-          $ref: '#/components/schemas/Statistics'
-    StatusResponse:
-      type: object
-      required:
-      - status
-      properties:
-        status:
-          type: boolean
-          description: True when the OpenUV API is available.
     Statistics:
       type: object
       properties:
@@ -116,6 +93,29 @@ components:
           type: number
           format: float
           description: USD cost accrued last month.
+    Error:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
+    StatusResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          type: boolean
+          description: True when the OpenUV API is available.
+    StatisticsResponse:
+      type: object
+      required:
+      - result
+      properties:
+        result:
+          $ref: '#/components/schemas/Statistics'
   responses:
     Forbidden:
       description: Missing or invalid API key.
